@@ -3,7 +3,7 @@
     android:id="@+id/mainList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/DarkMint"
+    android:background="@color/Yellow"
     android:divider="@drawable/divider"
     android:drawSelectorOnTop="true" >
 

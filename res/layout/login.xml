@@ -20,51 +20,40 @@
         android:visibility="gone" >
 
         <EditText
-            android:id="@+id/editText_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text" />
+           android:id="@+id/edt_bluetooth"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:ems="10"
+           android:inputType="text" />
 
-        <EditText
-            android:id="@+id/editText_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textEmailAddress" />
+       <EditText
+           android:id="@+id/editText_id"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:ems="10"
+           android:inputType="textEmailAddress" />
 
-        <EditText
-            android:id="@+id/editText_position"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/position"
-            android:ems="10"
-            android:inputType="text" />
+       <EditText
+           android:id="@+id/editText_name"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:ems="10"
+           android:inputType="text" />
 
-        <EditText
-            android:id="@+id/editText_about"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="top|left"
-            android:hint="@string/about"
-            android:ems="10"
-            android:inputType="textMultiLine"
-            android:scrollbars="vertical"
-            android:lines="5" />
+       <EditText
+           android:id="@+id/editText_title"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:ems="10"
+           android:hint="@string/position"
+           android:inputType="text" />
 
-        <EditText
-            android:id="@+id/editText_urls"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text" />
-
-         <EditText
-            android:id="@+id/edt_bluetooth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="text" />
+       <EditText
+           android:id="@+id/editText_urls"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:ems="10"
+           android:inputType="text" />
          
         <Button
             android:id="@+id/button_apply"

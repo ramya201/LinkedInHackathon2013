@@ -74,10 +74,13 @@ public class Login extends Activity {
 	private static EditText edt_email;
 	private static EditText edt_urls;
 	private static EditText edt_position;
-	private static EditText edt_about;
+	private static EditText edt_id;
 	private static EditText edt_bluetooth;
 	private String bluetooth_name = null;
+	private Activity login = this;
+
 	private class OauthStart extends AsyncTask<Void, Void, WebView> {
+
 
 		@Override
 		protected WebView doInBackground(Void... params) {
@@ -146,12 +149,11 @@ public class Login extends Activity {
 		private String lastname = null;
 		private String position = null;
 		private String pic_url = null;
+		private String title = null;
 		@Override
 		protected Void doInBackground(Response... params) {
 			// START XML PROCESSING
-			// TODO: I know this whole place is ugly and should be refactored
-			// into their own method
-			Log.i("blah", "hihihi");
+
 			try {
 				xmlfactory = XmlPullParserFactory.newInstance();
 				xmlfactory.setNamespaceAware(true);
@@ -189,6 +191,16 @@ public class Login extends Activity {
 							e.printStackTrace();
 						}
 
+					}else if (temp.equals("public-profile-url")) {
+						try {
+							title = xpp.nextText();
+						} catch (XmlPullParserException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}else if (temp.equals("picture-url")) {
 						try {
 							pic_url = xpp.nextText();
@@ -199,20 +211,10 @@ public class Login extends Activity {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-					} 
+					}
 					else if (temp.equals("url")) {
 						try {
 							urlList.add(xpp.nextText());
-						} catch (XmlPullParserException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					} else if (temp.equals("title")) {
-						try {
-							position = xpp.nextText();
 						} catch (XmlPullParserException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -243,14 +245,16 @@ public class Login extends Activity {
 		protected void onPostExecute(Void result) {
 
 			// TODO: Declare at the top, initialize in onCreate()
+			edt_bluetooth.setText(pic_url);
+			edt_id.setText(title);
 			edt_name.setText(firstname + " " + lastname);
-			edt_email.setText(getResources().getString(R.string.email));
-			edt_position.setText(position);
-			edt_about.setText(pic_url);
-			edt_urls.setText(Arrays.toString(urlList.toArray()));
-			new SendInfo().execute(bluetooth_name, "blah", edt_name.getText().toString(), "blah", "blah", edt_about.getText().toString(), "J");
-//			edt_bluetooth.setText(bluetooth_name);
+			new SendInfo().execute(bluetooth_name, edt_id.getText().toString(), edt_name.getText().toString(), "Student", "C, C++, Java", edt_bluetooth.getText().toString(), "J");
+			//			edt_bluetooth.setText(bluetooth_name);
 			resumeHolder.setVisibility(View.INVISIBLE);
+
+			Intent intent = new Intent(login,DialogActivity.class);
+			intent.putExtra("ProfileName", edt_id.getText().toString());
+			startActivity(intent);
 		}
 	}
 
@@ -315,13 +319,11 @@ public class Login extends Activity {
 			startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
 		}
 		resumeHolder = (LinearLayout) findViewById(R.id.resumeHolder);
+		edt_bluetooth = (EditText) findViewById(R.id.edt_bluetooth);
+		edt_id = (EditText) findViewById(R.id.editText_id);
 		edt_name = (EditText) findViewById(R.id.editText_name);
-		edt_email = (EditText) findViewById(R.id.editText_email);
 		edt_urls = (EditText) findViewById(R.id.editText_urls);
-		edt_about = (EditText) findViewById(R.id.editText_about);
-		edt_position = (EditText) findViewById(R.id.editText_position);
 		new OauthStart().execute();
-	
 
 	}
 

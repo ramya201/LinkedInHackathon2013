@@ -2,7 +2,8 @@
 <resources>
     <color name="Black">#000000</color>
     <color name="DarkMint">#99238784</color>
-    <color name="Yellow">#EEFFE6B5</color>
-    <color name="White">#FFFFFF</color>
+    <color name="Yellow">#FFE6B5</color>
+    <color name="White">#CCFFFFFF</color>
+    <color name="Mint">#59BDBD</color>
     
 </resources>
