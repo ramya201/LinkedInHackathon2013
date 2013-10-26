@@ -35,7 +35,9 @@ public class CreateMappings {
 		nameValuePairs.add(new BasicNameValuePair ("bluetooth", "DevikasIPhone,RamyasAndroid"));
 		request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 	}
-	public static void createNewEntry() throws URISyntaxException, ClientProtocolException, IOException {
+	public static void createNewEntry(String bluetooth, 
+			String profile, String name, String profiletitle,
+			String skills, String picUrl) throws URISyntaxException, ClientProtocolException, IOException {
 		HttpClient client = new DefaultHttpClient();
 		URI uri = new URI("http://localhost:3000/maptolinkedins.json");
 		HttpPost request = new HttpPost(uri.toASCIIString());
@@ -48,7 +50,7 @@ public class CreateMappings {
         nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][skills]", "Java,Sleeping"));
         nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][picurl]", "https://fbcdn-photos-h-a.akamaihd.net/hphotos-ak-prn2/s720x720/1395843_10151633982246256_2073503650_n.jpg"));
         */
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+		/*List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
         nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][bluetooth]", "RamyasAndroid"));
         nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][linkedinprofile]", "ramya201"));
         nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][name]", "Ramya B"));
@@ -56,7 +58,16 @@ public class CreateMappings {
         nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][skills]", "Java,Android"));
         nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][picurl]", "http://qph.is.quoracdn.net/main-thumb-19609480-200-8jYP5NR0wxPclRDXeNRDF4iIQkWBwDeF.jpeg"));
         request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-        
+        */
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][bluetooth]", bluetooth));
+        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][linkedinprofile]", profile));
+        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][name]", name));
+        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][profiletitle]", profiletitle));
+        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][skills]", skills));
+        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][picurl]", picUrl));
+        request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+		
         // Execute HTTP Post Request
         HttpResponse response = client.execute(request);
 	}
