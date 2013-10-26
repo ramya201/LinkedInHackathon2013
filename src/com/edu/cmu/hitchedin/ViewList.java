@@ -131,7 +131,7 @@ public class ViewList extends Activity {
 				JSONArray allProfiles = new JSONArray(responseString);
 				for(int i = 0 ; i < allProfiles.length(); i++){
 					JSONObject profile = (JSONObject) allProfiles.get(i);
-					if("J".equals(type.add((String) profile.get("comment")))){
+					if("J".equals(profile.get("comment"))){
 						Jnames.add((String) profile.get("name"));
 						Jprofile_titles.add((String) profile.get("profiletitle"));
 						Jskills.add((String) profile.get("skills"));
