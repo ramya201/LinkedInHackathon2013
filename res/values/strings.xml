@@ -4,6 +4,9 @@
     <string name="app_name">HitchedIn</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="email">String</string>
+    <string name="apply">Apply</string>
+    <string name="about">About</string>
+    <string name="position">Position</string>
     <string name="title_activity_view_list">ViewList</string>
-
 </resources>
