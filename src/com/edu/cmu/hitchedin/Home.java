@@ -2,6 +2,7 @@ package com.edu.cmu.hitchedin;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 
 public class Home extends Activity {
@@ -10,6 +11,9 @@ public class Home extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home);
+		
+		Intent intent = new Intent(this,ViewList.class);
+		startActivity(intent);
 	}
 
 	@Override

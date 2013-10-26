@@ -8,5 +8,5 @@
     <string name="apply">Apply</string>
     <string name="about">About</string>
     <string name="position">Position</string>
-
+    <string name="title_activity_view_list">ViewList</string>
 </resources>
