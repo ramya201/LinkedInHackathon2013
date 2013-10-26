@@ -73,7 +73,7 @@ public class ViewList extends Activity {
 		
 		list = (ListView) findViewById(R.id.mainList);
 		
-		adapter = new CustomAdapter(this.getApplicationContext(),names,profile_titles,pic_urls);
+		adapter = new CustomAdapter(this.getApplicationContext(),Rnames,Rprofile_titles,Rpic_urls);
 		list.setAdapter(adapter);
 		
 		list.setOnItemClickListener(new OnItemClickListener() {
@@ -81,7 +81,7 @@ public class ViewList extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
 					long arg3) {
 				Intent intent = new Intent(viewList, ViewDetails.class);
-				intent.putExtra("ProfileURL", profileid.get(arg2));
+				intent.putExtra("ProfileURL", Rprofileid.get(arg2));
 				startActivity(intent);
 			} 
         });
