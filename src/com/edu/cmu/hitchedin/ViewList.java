@@ -43,12 +43,16 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 public class ViewList extends Activity {
-	private ArrayList<String> names = new ArrayList<String>();
-	private ArrayList<String> profile_titles = new ArrayList<String>();
-	private ArrayList<String> pic_urls = new ArrayList<String>();
-	private ArrayList<String> type = new ArrayList<String>();
-	private ArrayList<String> skills = new ArrayList<String>();
-	private ArrayList<String> profileid = new ArrayList<String>();
+	private ArrayList<String> Rnames = new ArrayList<String>();
+	private ArrayList<String> Rprofile_titles = new ArrayList<String>();
+	private ArrayList<String> Rpic_urls = new ArrayList<String>();
+	private ArrayList<String> Rskills = new ArrayList<String>();
+	private ArrayList<String> Rprofileid = new ArrayList<String>();
+	private ArrayList<String> Jnames = new ArrayList<String>();
+	private ArrayList<String> Jprofile_titles = new ArrayList<String>();
+	private ArrayList<String> Jpic_urls = new ArrayList<String>();
+	private ArrayList<String> Jskills = new ArrayList<String>();
+	private ArrayList<String> Jprofileid = new ArrayList<String>();
 	
 	private ListView list;
 	private CustomAdapter adapter;
@@ -127,12 +131,21 @@ public class ViewList extends Activity {
 				JSONArray allProfiles = new JSONArray(responseString);
 				for(int i = 0 ; i < allProfiles.length(); i++){
 					JSONObject profile = (JSONObject) allProfiles.get(i);
-					names.add((String) profile.get("name"));
-					profile_titles.add((String) profile.get("profiletitle"));
-					skills.add((String) profile.get("skills"));
-					profileid.add((String) profile.get("linkedinprofile"));
-					pic_urls.add((String) profile.get("picurl"));
-					type.add((String) profile.get("comment"));
+					if("J".equals(type.add((String) profile.get("comment")))){
+						Jnames.add((String) profile.get("name"));
+						Jprofile_titles.add((String) profile.get("profiletitle"));
+						Jskills.add((String) profile.get("skills"));
+						Jprofileid.add((String) profile.get("linkedinprofile"));
+						Jpic_urls.add((String) profile.get("picurl"));
+					}
+					else
+					{
+						Rnames.add((String) profile.get("name"));
+						Rprofile_titles.add((String) profile.get("profiletitle"));
+						Rskills.add((String) profile.get("skills"));
+						Rprofileid.add((String) profile.get("linkedinprofile"));
+						Rpic_urls.add((String) profile.get("picurl"));
+					}
 				}
 			}
 			catch (URISyntaxException e) {
