@@ -6,6 +6,9 @@ import java.util.Arrays;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 public class ViewList extends Activity {
@@ -26,6 +29,16 @@ public class ViewList extends Activity {
 		
 		adapter = new CustomAdapter(this.getApplicationContext(),names,profile_titles,pic_urls);
 		list.setAdapter(adapter);
+		
+		list.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				// TODO Auto-generated method stub
+				
+			}
+ 
+        });
 	}
 	
 	public void fetchData()

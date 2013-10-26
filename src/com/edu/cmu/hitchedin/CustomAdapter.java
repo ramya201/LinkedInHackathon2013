@@ -103,7 +103,6 @@ public class CustomAdapter extends BaseAdapter {
 				}
 			}
 			return images;
-
 		}
 
 		@Override

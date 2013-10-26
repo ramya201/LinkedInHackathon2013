@@ -11,8 +11,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="6dip"
-        android:contentDescription="TODO" />
+        android:layout_marginRight="6dip"/>
 
     <TextView
         android:id="@+id/profileTitle"
