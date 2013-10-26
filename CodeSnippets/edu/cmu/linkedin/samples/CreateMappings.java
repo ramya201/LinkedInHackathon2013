@@ -33,13 +33,24 @@ public static void main(String[] args) throws Exception{
 		"linkedinprofile": "Anvi"} 
 */
 		//try {
-			URI uri = new URI("http://localhost:3000/mappings.json");
+			URI uri = new URI("http://localhost:3000/maptolinkedins.json");
 			HttpPost request = new HttpPost(uri.toASCIIString());
 			
+			/*List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+	        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][bluetooth]", "DevikasIPhone"));
+	        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][linkedinprofile]", "devikanair"));
+	        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][name]", "Devika Nair"));
+	        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][profiletitle]", "TA at CMU"));
+	        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][skills]", "Java,Sleeping"));
+	        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][picurl]", "https://fbcdn-photos-h-a.akamaihd.net/hphotos-ak-prn2/s720x720/1395843_10151633982246256_2073503650_n.jpg"));
+	        */
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-	        nameValuePairs.add(new BasicNameValuePair ("[mapping][bluetooth]", "sampleb"));
-	        nameValuePairs.add(new BasicNameValuePair ("[mapping][linkedinprofile]", "anvi"));
-	        //nameValuePairs.add(new BasicNameValuePair("linkedinprofle", "anvi"));
+	        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][bluetooth]", "RamyasAndroid"));
+	        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][linkedinprofile]", "ramya201"));
+	        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][name]", "Ramya B"));
+	        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][profiletitle]", "TA at CMU"));
+	        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][skills]", "Java,Android"));
+	        nameValuePairs.add(new BasicNameValuePair ("[maptolinkedin][picurl]", "http://qph.is.quoracdn.net/main-thumb-19609480-200-8jYP5NR0wxPclRDXeNRDF4iIQkWBwDeF.jpeg"));
 	        request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
 	        // Execute HTTP Post Request
