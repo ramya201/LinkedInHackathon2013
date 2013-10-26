@@ -20,13 +20,18 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.edu.cmu.hitchedin.ViewList"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" 
+            android:parentActivityName="com.edu.cmu.hitchedin.Home">
+        </activity>
+         <activity
+            android:name="com.edu.cmu.hitchedin.ViewDetails"
+            android:label="@string/app_name" 
+            android:parentActivityName="com.edu.cmu.hitchedin.ViewList">
         </activity>
     </application>
 
