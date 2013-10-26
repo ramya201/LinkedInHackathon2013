@@ -73,18 +73,17 @@ public class ViewList extends Activity {
 		try {
 			uri = new URI("http://hitchedin.herokuapp.com/mappings.json");
 			HttpPost request = new HttpPost(uri.toASCIIString());
+			
 			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
 			//TODO: This is where you pass list of bluetooth ids
-	        nameValuePairs.add(new BasicNameValuePair ("bluetooth", "DevikasIPhone,RamyasAndroid"));
+	        nameValuePairs.add(new BasicNameValuePair ("bluetooth", "DevikasIPhone,RamyasAndroid,Anvi"));
 	        request.setEntity(new UrlEncodedFormEntity(nameValuePairs));   
 	        // Execute HTTP Post Request
 	        HttpResponse response = client.execute(request);
 	        HttpEntity entity = response.getEntity();
 	        String responseString = new BasicResponseHandler().handleResponse(response);
-	        System.out.println(responseString);
 			JSONArray allProfiles = new JSONArray(responseString);
 			for(int i = 0 ; i < allProfiles.length(); i++){
-				System.out.println(allProfiles.get(i));
 				JSONObject profile = (JSONObject) allProfiles.get(i);
 				names.add((String) profile.get("name"));
 				profile_titles.add((String) profile.get("profiletitle"));
@@ -92,8 +91,7 @@ public class ViewList extends Activity {
 				profileid.add((String) profile.get("linkedinprofile"));
 				pic_urls.add((String) profile.get("picurl"));
 				type.add((String) profile.get("comment"));
-			
-		}
+			}
 		}
 		catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
