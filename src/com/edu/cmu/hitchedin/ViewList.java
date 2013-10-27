@@ -42,10 +42,12 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 public class ViewList extends Activity {
 	private ArrayList<String> Rnames = new ArrayList<String>();
@@ -65,12 +67,13 @@ public class ViewList extends Activity {
 	private String bluetooth_name = null;
 	private static ArrayList<String> mArrayAdapter = new ArrayList<String>();
 	private String role;
+	private SearchView searchView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.listview);
-		
+
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(viewList.getApplicationContext());
 		role = prefs.getString("Role",null);
 
@@ -118,7 +121,7 @@ public class ViewList extends Activity {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		// Register the BroadcastReceiver
 		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
 		registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
@@ -160,7 +163,9 @@ public class ViewList extends Activity {
 				}
 				startActivity(intent);
 			} 
-		});		
+		});
+
+		
 	}
 
 	public void fetchData()
@@ -187,10 +192,36 @@ public class ViewList extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.view_list, menu);
+		getMenuInflater().inflate(R.menu.options_menu, menu);
+		MenuItem searchViewItem = menu.findItem(R.id.menu_search);
+		searchView = (SearchView) searchViewItem.getActionView();
+		//searchView.setIconifiedByDefault(false);
+		searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener( ) {
+			@Override
+			public boolean onQueryTextChange( String newText ) {
+				return false;
+
+			}
+
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				try {
+					ArrayList<String> queries = new ArrayList<String>();
+					queries.add(query);
+					new SendInfo().execute(mArrayAdapter,queries).get();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return true;		        
+			}
+		});
 		return true;
 	}
-	
+
 	public class FetchData extends AsyncTask<Void, Void, Void> {
 
 		@Override
@@ -326,6 +357,145 @@ public class ViewList extends Activity {
 				e.printStackTrace();
 			}
 			return null;
+		}
+	}
+
+	private class SendInfo extends AsyncTask<ArrayList<String>, Void, String> {
+
+		@Override
+		protected String doInBackground(ArrayList<String>... params) {
+			HttpClient client = new DefaultHttpClient();
+			URI uri = null;
+			try {
+				uri = new URI("http://hitchedin.herokuapp.com/recruiterfilters.json");
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			HttpPost request = new HttpPost(uri.toASCIIString());
+			List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
+			StringBuffer devices_send = new StringBuffer();
+			for (String s: params[0])
+			{
+				devices_send.append(s);
+				devices_send.append(",");
+			}
+			nameValuePairs.add(new BasicNameValuePair ("bluetooth", devices_send.toString()));
+			nameValuePairs.add(new BasicNameValuePair ("filters", params[1].get(0)));
+			try {
+				request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// Execute HTTP Post Request
+			HttpResponse response = null;
+			try {
+				response = client.execute(request);
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			HttpEntity entity = response.getEntity();
+			String responseString = null;
+			try {
+				responseString = new BasicResponseHandler().handleResponse(response);
+			} catch (HttpResponseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			JSONArray allProfiles = null;
+			try {
+				allProfiles = new JSONArray(responseString);
+				Log.i("Test",responseString);
+				for(int i = 0 ; i < allProfiles.length(); i++){
+					JSONObject profile = (JSONObject) allProfiles.get(i);
+					if("R".equals(profile.get("comment"))){
+						Rnames.add((String) profile.get("name"));
+						Rprofile_titles.add((String) profile.get("profiletitle"));
+						Rskills.add((String) profile.get("skills"));
+						Rprofileid.add((String) profile.get("linkedinprofile"));
+						Rpic_urls.add((String) profile.get("picurl"));
+					}
+					else
+					{
+						Jnames.add((String) profile.get("name"));
+						Jprofile_titles.add((String) profile.get("profiletitle"));
+						Jskills.add((String) profile.get("skills"));
+						Jprofileid.add((String) profile.get("linkedinprofile"));
+						Jpic_urls.add((String) profile.get("picurl"));
+					}
+				}
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			/*for(int i = 0 ; i < allProfiles.length(); i++){
+				JSONObject profile = null;
+				try {
+					profile = (JSONObject) allProfiles.get(i);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					System.out.println(profile.get("name"));
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}*/
+			return null;
+
+		}
+		protected void onPostExecute(String result) {
+			viewList.runOnUiThread(new Runnable(){
+
+				@Override
+				public void run() {
+					list.invalidateViews();
+					
+					for (int i = 0; i < adapter.getCount(); i++)
+					{
+						adapter.remove(i);
+					}
+
+					if (role.equalsIgnoreCase("J"))
+					{
+						adapter = new CustomAdapter(viewList.getApplicationContext(),Rnames,Rprofile_titles,Rpic_urls);
+					} else if (role.equalsIgnoreCase("R"))
+					{
+						adapter = new CustomAdapter(viewList.getApplicationContext(),Jnames,Jprofile_titles,Jpic_urls);
+					}
+					list.setAdapter(adapter);
+
+
+
+					list.setOnItemClickListener(new OnItemClickListener() {
+						@Override
+						public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+								long arg3) {
+							Intent intent = new Intent(viewList, ViewDetails.class);
+							if (role.equalsIgnoreCase("J"))
+							{
+								intent.putExtra("ProfileURL", Rprofileid.get(arg2));
+							} else if (role.equalsIgnoreCase("R"))
+							{
+								intent.putExtra("ProfileURL", Jprofileid.get(arg2));
+							}
+							startActivity(intent);
+						} 
+					});					
+				}					
+			});
+			super.onPostExecute(result);
 		}
 	}
 

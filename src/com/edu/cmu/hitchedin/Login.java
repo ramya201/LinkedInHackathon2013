@@ -248,7 +248,7 @@ public class Login extends Activity {
 			edt_bluetooth.setText(pic_url);
 			edt_id.setText(title);
 			edt_name.setText(firstname + " " + lastname);
-			new SendInfo().execute(bluetooth_name, edt_id.getText().toString(), edt_name.getText().toString(), "Student", "C, C++, Java", edt_bluetooth.getText().toString(), "J");
+			new SendInfo().execute(bluetooth_name, edt_id.getText().toString(), edt_name.getText().toString(), "CMU + Bank of America - MHCI Capstone Project Research Lead", "C, Java", edt_bluetooth.getText().toString(), "J");
 			//			edt_bluetooth.setText(bluetooth_name);
 			resumeHolder.setVisibility(View.INVISIBLE);
 

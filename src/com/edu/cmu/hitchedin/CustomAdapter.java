@@ -42,6 +42,13 @@ public class CustomAdapter extends BaseAdapter {
 	public Object getItem(int arg0) {
 		return null;
 	}
+	
+	public void remove(int arg0)
+	{
+		names.remove(arg0);
+		profile_titles.remove(arg0);
+		pic_urls.remove(arg0);
+	}
 
 	@Override
 	public long getItemId(int arg0) {
